@@ -9,7 +9,11 @@
     <ContentPage.BindingContext>
         <vm:PendingOrdersViewModel />
     </ContentPage.BindingContext>
-    
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nuevo Pedido" Clicked="AddOrder_Clicked" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>

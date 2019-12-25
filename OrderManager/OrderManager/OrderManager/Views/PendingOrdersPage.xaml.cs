@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace OrderManager.Views
@@ -9,6 +10,11 @@ namespace OrderManager.Views
         public PendingOrdersPage()
         {
             InitializeComponent();
+        }
+
+        async void AddOrder_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
         }
     }
 }

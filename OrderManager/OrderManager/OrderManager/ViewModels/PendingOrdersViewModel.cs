@@ -9,8 +9,6 @@ namespace OrderManager.ViewModels
     {
         private DateTime _selectedDate;
         private string _someText;
-        private List<Order> mockOrders;
-
 
         public DateTime SelectedDate {
             get 
@@ -38,31 +36,32 @@ namespace OrderManager.ViewModels
 
         public PendingOrdersViewModel()
         {
+            App.Database.DeleteAllAsync();
             OrderList = new ObservableCollection<Order>();
-            mockOrders = new List<Order>();
 
             for(int i = 0; i < 20; i++)
             {
                 if(i % 2 == 0)
                 {
-                    mockOrders.Add(new Order($"Cliente {i}", $"Detalle {i}", DateTime.Today));
+                    App.Database.SaveItemAsync(new Order($"Cliente {i}", $"Detalle {i}", DateTime.Today));
                 }
                 else
                 {
                     TimeSpan timeSpan = new TimeSpan(24, 0, 0);
-                    mockOrders.Add(new Order($"Cliente {i}", $"Detalle {i}", DateTime.Today + timeSpan));
+                    App.Database.SaveItemAsync(new Order($"Cliente {i}", $"Detalle {i}", DateTime.Today + timeSpan));
                 }
             }
             
             SelectedDate = DateTime.Today;
         }
 
-        private void UpdateOrderList()
+        private async void UpdateOrderList()
         {
             OrderList.Clear();
-            foreach (var order in mockOrders)
+            List<Order> orders = await App.Database.GetOrdersByDateAsync(SelectedDate);
+            foreach (var order in orders)
             {
-                if(SelectedDate.Date == order.DeliverDate.Date)
+                if (SelectedDate.Date == order.DeliverDate.Date)
                 {
                     OrderList.Add(order);
                 }
