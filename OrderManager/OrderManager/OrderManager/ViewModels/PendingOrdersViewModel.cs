@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Xamarin.Forms;
 
 namespace OrderManager.ViewModels
 {
@@ -38,33 +39,20 @@ namespace OrderManager.ViewModels
         {
             App.Database.DeleteAllAsync();
             OrderList = new ObservableCollection<Order>();
-
-            for(int i = 0; i < 20; i++)
-            {
-                if(i % 2 == 0)
-                {
-                    App.Database.SaveItemAsync(new Order($"Cliente {i}", $"Detalle {i}", DateTime.Today));
-                }
-                else
-                {
-                    TimeSpan timeSpan = new TimeSpan(24, 0, 0);
-                    App.Database.SaveItemAsync(new Order($"Cliente {i}", $"Detalle {i}", DateTime.Today + timeSpan));
-                }
-            }
-            
             SelectedDate = DateTime.Today;
+            MessagingCenter.Subscribe<NewOrderViewModel>(this, "NewOrderAdded", (obj) =>
+            {
+                UpdateOrderList();
+            });
         }
 
         private async void UpdateOrderList()
         {
             OrderList.Clear();
             List<Order> orders = await App.Database.GetOrdersByDateAsync(SelectedDate);
-            foreach (var order in orders)
+            foreach(Order order in orders)
             {
-                if (SelectedDate.Date == order.DeliverDate.Date)
-                {
-                    OrderList.Add(order);
-                }
+                OrderList.Add(order);
             }
         }
     }

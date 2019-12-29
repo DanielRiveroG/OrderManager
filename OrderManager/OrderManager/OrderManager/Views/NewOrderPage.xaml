@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OrderManager.Views.NewOrderPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancelar" Command="{Binding CancelCommand}"/>
+        <ToolbarItem Text="Guardar" Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Cliente" FontSize="Medium" />
+            <Entry Text="{Binding CustomerName}" d:Text="Item name" FontSize="Small" />
+            <Label Text="Teléfono" FontSize="Medium" />
+            <Entry Text="{Binding PhoneNumber}" d:Text="Item name" FontSize="Small" Keyboard="Telephone"/>
+            <Label Text="Fecha de entrega" FontSize="Medium" />
+            <DatePicker 
+                        Grid.Column="1"
+                        Format="dd/MM/yyyy"
+                        HorizontalOptions="CenterAndExpand"
+                        Date="{Binding DeliverDate}"></DatePicker>
+            <Label Text="Descripción del pedido" FontSize="Medium" />
+            <Editor Text="{Binding OrderDetail}" d:Text="Item description" FontSize="Small" Margin="0" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

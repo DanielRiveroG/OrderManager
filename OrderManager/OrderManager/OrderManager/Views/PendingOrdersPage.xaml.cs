@@ -14,7 +14,7 @@ namespace OrderManager.Views
 
         async void AddOrder_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+            await Navigation.PushModalAsync(new NavigationPage(new NewOrderPage()));
         }
     }
 }

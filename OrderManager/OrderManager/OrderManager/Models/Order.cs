@@ -8,12 +8,6 @@ namespace OrderManager.Models
         {
 
         }
-        public Order(string customer, string orderDetail, DateTime deliverDate)
-        {
-            Customer = customer;
-            OrderDetail = orderDetail;
-            DeliverDate = deliverDate;
-        }
 
         public int Id { get; set; }
 
@@ -21,7 +15,7 @@ namespace OrderManager.Models
 
         public string OrderDetail { get; set; }
 
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public DateTime DeliverDate { get; set; }
     }
