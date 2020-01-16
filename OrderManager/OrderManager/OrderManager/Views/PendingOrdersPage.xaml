@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:vm="clr-namespace:OrderManager.ViewModels"
-             x:Class="OrderManager.Views.PendingOrdersPage">
+             x:Class="OrderManager.Views.PendingOrdersPage"
+             x:Name="PendingOrdersView">
     <ContentPage.BindingContext>
         <vm:PendingOrdersViewModel />
     </ContentPage.BindingContext>
@@ -37,31 +38,33 @@
                     ItemsSource="{Binding OrderList}"
                     VerticalOptions="FillAndExpand"
                     HasUnevenRows="true">
-                    <d:ListView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>First Item</x:String>
-                            <x:String>Second Item</x:String>
-                            <x:String>Third Item</x:String>
-                            <x:String>Fourth Item</x:String>
-                            <x:String>Fifth Item</x:String>
-                            <x:String>Sixth Item</x:String>
-                        </x:Array>
-                    </d:ListView.ItemsSource>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Padding="10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
                                     <Label Text="{Binding Customer}" 
                                     d:Text="{Binding .}"
                                     LineBreakMode="NoWrap" 
                                     Style="{DynamicResource ListItemTextStyle}" 
-                                    FontSize="16" />
-                                    <Label Text="{Binding OrderDetail}" 
-                                    d:Text="Item description"
-                                    LineBreakMode="NoWrap"
-                                    Style="{DynamicResource ListItemDetailTextStyle}"
-                                    FontSize="13" />
-                                </StackLayout>
+                                    FontSize="16"
+                                    Grid.Column="0"
+                                    Padding="20"/>
+                                    <ImageButton Source="Resources/drawable/check_box.png"
+                                    Grid.Column="1"
+                                    Padding="20"
+                                    BackgroundColor="Transparent"/>
+                                    <ImageButton Source="Resources/drawable/paper_bin.png"
+                                    Grid.Column="2"
+                                    Padding="20"
+                                    Command="{Binding BindingContext.DeleteCommand, Source={x:Reference PendingOrdersView}}"
+                                    CommandParameter="{Binding}"
+                                    BackgroundColor="Transparent"/>
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

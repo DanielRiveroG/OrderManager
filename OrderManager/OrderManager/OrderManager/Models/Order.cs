@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace OrderManager.Models
 {
@@ -9,6 +10,7 @@ namespace OrderManager.Models
 
         }
 
+        [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
 
         public string Customer { get; set; }

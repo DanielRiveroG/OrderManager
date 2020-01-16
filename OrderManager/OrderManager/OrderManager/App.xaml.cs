@@ -25,7 +25,7 @@ namespace OrderManager
                 if (database == null)
                 {
                     database = new OrderDatabase(
-                      Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OrdersSQLite.db3"));
+                      Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OrdersDataBaseSQLite.db3"));
                 }
                 return database;
             }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace OrderManager.ViewModels
@@ -10,9 +11,11 @@ namespace OrderManager.ViewModels
     {
         private DateTime _selectedDate;
         private string _someText;
+        private DelegateCommand<Order> _deleteCommand;
 
-        public DateTime SelectedDate {
-            get 
+        public DateTime SelectedDate
+        {
+            get
             {
                 return _selectedDate;
             }
@@ -20,16 +23,22 @@ namespace OrderManager.ViewModels
             {
                 _selectedDate = value;
                 UpdateOrderList();
-            } 
+            }
         }
 
-        public string SomeText { 
-            get { return _someText; } 
-            set 
-            { 
+        public string SomeText
+        {
+            get { return _someText; }
+            set
+            {
                 _someText = value;
                 OnPropertyChanged(nameof(SomeText));
-            } 
+            }
+        }
+
+        public ICommand DeleteCommand
+        {
+            get { return _deleteCommand = _deleteCommand ?? new DelegateCommand<Order>(DeleteOrderFromList);}
         }
 
         public ObservableCollection<Order> OrderList { get; set; }
@@ -37,7 +46,7 @@ namespace OrderManager.ViewModels
 
         public PendingOrdersViewModel()
         {
-            App.Database.DeleteAllAsync();
+            //App.Database.DeleteAllAsync();
             OrderList = new ObservableCollection<Order>();
             SelectedDate = DateTime.Today;
             MessagingCenter.Subscribe<NewOrderViewModel>(this, "NewOrderAdded", (obj) =>
@@ -54,6 +63,12 @@ namespace OrderManager.ViewModels
             {
                 OrderList.Add(order);
             }
+        }
+
+        private async void DeleteOrderFromList(Order parameter)
+        {
+            await App.Database.DeleteOrderAsync((Order)parameter);
+            UpdateOrderList();
         }
     }
 }
